@@ -58,7 +58,7 @@ end
 ```sh
 vagrant up
 ```
-📸 **Captura: Instalación de Node.js** (imagenes/instalacion-nodejs.png)  
+📸 **Captura: Instalación de Node.js**  
 ![Instalacion nodejs](https://github.com/user-attachments/assets/6e2daf7d-2777-4ca9-ba10-bd014766aea2)
 
 ---
@@ -99,7 +99,7 @@ app.listen(port, () => {
   console.log(`App listening on port ${port}`);
 });
 ```
-📸 **Captura: Iniciamos proyecto Node.js** (imagenes/iniciamos-proyecto.png)  
+📸 **Captura: Iniciamos proyecto Node.js**
 ![iniciamos proyecto node js](https://github.com/user-attachments/assets/3f4e6fd5-31b2-4dbb-bbae-fdee14870d88)
 
 📸 **Captura: Instalamos Express** (imagenes/instalamos-express.png)  
@@ -113,7 +113,7 @@ app.listen(port, () => {
 ```sh
 node server.js
 ```
-📸 **Captura: Aplicación escuchando en el puerto 3000** (imagenes/app-en-3000.png)  
+📸 **Captura: Aplicación escuchando en el puerto 3000** 
 
 ![la aplicacion desplegada se escucha en el puerto 3000](https://github.com/user-attachments/assets/338c62bd-0196-4294-b143-84201205242a)
 
@@ -121,7 +121,7 @@ node server.js
 ```
 http://192.168.56.10:3000
 ```
-📸 **Captura: Comprobación en el navegador (puerto 8080 y 3000)** (imagenes/comprobacion-puerto-8080.png, imagenes/prueba-red.png)
+📸 **Captura: Comprobación en el navegador (puerto 8080 y 3000)**
 ![comprobacion en internet con puerto 8080](https://github.com/user-attachments/assets/c077888d-3c27-4f0b-99f9-fcc3fdaf2d10)
 ![otra prueba en red](https://github.com/user-attachments/assets/0e265665-3746-402d-82fd-5c8b05feb654)
 ![prueba 3 en el navegador](https://github.com/user-attachments/assets/47acf226-a6c2-4f46-863d-e81055816c48)
@@ -175,7 +175,7 @@ if (cluster.isMaster) {
   });
 }
 ```
-📸 **Captura: Creamos aplicación con cluster** (imagenes/app-con-cluster.png)  
+📸 **Captura: Creamos aplicación con cluster**
 ![creamos app con cluster](https://github.com/user-attachments/assets/2ed71a76-6efe-422c-9e9a-b11e3f33885c)
 
 ---
@@ -188,10 +188,10 @@ loadtest http://localhost:3000/api/500000 -n 1000 -c 100
 ```
 ![instalamos loadtest para las pruebas de rendimientp](https://github.com/user-attachments/assets/d5a931c4-30cd-4a4d-8470-31af200e0770)
 
-📸 **Captura: Prueba sin cluster** (imagenes/prueba-sin-cluster.png)
+📸 **Captura: Prueba sin cluster**
 ![prueba de rendimiento sin cluster](https://github.com/user-attachments/assets/2fdafa8c-0e71-462a-bfd1-6106467c588e)
 
-📸 **Captura: Prueba con cluster** (imagenes/prueba-con-cluster.png)  
+📸 **Captura: Prueba con cluster**  
 ![prueba de rendimiento con cluster](https://github.com/user-attachments/assets/5aef25a6-1524-4b80-aa4b-64dc4e055eae)
 
 ---
@@ -205,7 +205,7 @@ pm2 ls
 pm2 logs
 pm2 monit
 ```
-📸 **Captura: PM2 logs y procesos** (imagenes/pm2-logs.png, imagenes/pm2-monit.png)  
+📸 **Captura: PM2 logs y procesos**  
 ![pm2 logs](https://github.com/user-attachments/assets/23d295ec-968f-470f-b627-f6a944e26d58)
 ![pm2 ls](https://github.com/user-attachments/assets/1a6aca65-b9e9-4f24-b42b-5a11b08d777d)
 ![pm2 monit](https://github.com/user-attachments/assets/e5e8321b-2ee0-4fc7-802c-0972eb0da326)
@@ -220,5 +220,5 @@ pm2 monit
 ```sh
 pm2 stop server.js
 ```
-📸 **Captura: Deteniendo aplicación** (imagenes/pm2-stop.png)  
+📸 **Captura: Deteniendo aplicación**  
 ![paramos la aplicación](https://github.com/user-attachments/assets/3f561a0e-68be-48ae-a387-2a0bc42e35c1)
