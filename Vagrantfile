@@ -8,7 +8,6 @@ Vagrant.configure("2") do |config|
   # Configura el reenvío de puertos
   config.vm.network "forwarded_port", guest: 3000, host: 8080
 
-
   # Configura una IP fija en la red privada
   config.vm.network "private_network", ip: "192.168.56.10"
 
@@ -18,87 +17,41 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.provision "shell", privileged: false, inline: <<-SCRIPT
-  #Actualizamos los paquetes
-  sudo apt update && sudo apt upgrade -y
+    # Actualizamos los paquetes
+    sudo apt update && sudo apt upgrade -y
 
-  #Instala Node.js y npm. Añadimos el repositorio oficial de Node.js:
-  sudo apt-get install curl
-  curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-  sudo apt install -y nodejs
+    # Instalamos dependencias necesarias
+    sudo apt install -y curl nano
 
-  #Creamos la carpeta sin cluster
-  mkdir node-app && cd node-app
-  sudo cp -v /home/vagrant/node-app /vagrant
+    # Instalamos Node.js y npm
+    curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+    sudo apt install -y nodejs
 
-  #Iniciamos un proyecto Node.js
-  npm init -y
+    # Creamos la carpeta node-app dentro de /home/vagrant
+    mkdir -p /home/vagrant/node-app
+    cd /home/vagrant/node-app
 
-  #Instalamos Express
-  npm install express
+    # Iniciamos un proyecto Node.js
+    npm init -y
 
-  #Creamos el archivo server.js
-  nano server.js
-  sudo cp -v /home/vagrant/node-app/server.js /vagrant
+    # Instalamos Express
+    npm install express
 
-  #Ejecutamos la aplicación
-  node server.js
+    # Copiamos los archivos del proyecto desde /vagrant a /home/vagrant/node-app
+    sudo cp /vagrant/server.js /home/vagrant/node-app/
+    sudo cp /vagrant/server-cluster.js /home/vagrant/node-app/
+    sudo cp /vagrant/ecosystem.config.js /home/vagrant/node-app/
 
-  #Ahora creamos la aplicación con cluster
-  nano server-cluster.js
-  sudo cp -v /home/vagrant/node-app/server-cluster.js /vagrant
+    # Instalamos loadtest globalmente
+    sudo npm install -g loadtest
 
-  #Ahora hacemos las pruebas de rendimiento con loadtest
-  sudo npm install -g loadtest
+    # Instalamos y configuramos PM2
+    sudo npm install -g pm2
+    pm2 start /home/vagrant/node-app/server.js -i 0
+    pm2 save
+    pm2 startup systemd
 
-  #Ejecutamos pruebas de carga sin cluster:
-  loadtest http://localhost:3000/api/500000 -n 1000 -c 100
-
-  #Ejecutamos pruebas de carga con cluster:
-  loadtest http://localhost:3000/api/500000 -n 1000 -c 100
-
-
-  #Administración con PM2
-  sudo npm install -g pm2
-
-  #Ejecutamos la aplicación y comprobamos los procesos:
-  pm2 start server.js -i 0
-  pm2 ls
-  pm2 logs
-  pm2 monit
-
-  #Finalmente detenemos la aplicación
-  pm2 stop server.js
-
-
-  #Creamos el archivo ecosystem para cambios específicos
-  pm2 ecosystem
-  sudo cp -v /home/vagrant/node-app/ecosystem.config.js
-
-  #Una vez editado el archivo lo ejecutamos y ya si queremos podemos comprobar y jugar con el archivo con los siguientes comandos:
-  # $ pm2 start nombre_aplicacion
-  # $ pm2 restart nombre_aplicacion
-  # $ pm2 reload nombre_aplicacion
-  # $ pm2 stop nombre_aplicacion
-  # $ pm2 delete nombre_aplicacion
-
-  pm2 start ecosystem.config.js
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    # Mensaje final
+    echo "Configuración completada. Puedes acceder a la aplicación en http://192.168.56.10:3000"
   SCRIPT
 end
