@@ -182,6 +182,9 @@ if (cluster.isMaster) {
 📸 **Captura: Creamos aplicación con cluster**
 
 ![creamos app con cluster](https://github.com/user-attachments/assets/2ed71a76-6efe-422c-9e9a-b11e3f33885c)
+![prueba del punto 5](https://github.com/user-attachments/assets/2cf91f64-84c3-4a24-9c5b-10fd22f0119d)
+![comprobación 1 punto 5](https://github.com/user-attachments/assets/08d6583b-23ee-4c66-9570-2b99cac9476a)
+![comprobacion 2 punto 5](https://github.com/user-attachments/assets/3c07b017-20c1-49ea-90c9-5a15a0278fe7)
 
 ---
 
@@ -195,11 +198,12 @@ loadtest http://localhost:3000/api/500000 -n 1000 -c 100
 
 📸 **Captura: Prueba sin cluster**
 
-![prueba de rendimiento sin cluster](https://github.com/user-attachments/assets/2fdafa8c-0e71-462a-bfd1-6106467c588e)
+![prueba sin cluster 0 errores](https://github.com/user-attachments/assets/a274e661-d279-45e2-83bf-a6fd2c051c9f)
+
 
 📸 **Captura: Prueba con cluster** 
 
-![prueba de rendimiento con cluster](https://github.com/user-attachments/assets/5aef25a6-1524-4b80-aa4b-64dc4e055eae)
+![prueba con cluster 0 errores](https://github.com/user-attachments/assets/2a6c852a-bd47-488c-8eb2-057aac7efbb9)
 
 ---
 
