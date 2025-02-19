@@ -38,18 +38,39 @@ Vagrant.configure("2") do |config|
     npm install express
 
     # Copiamos los archivos del proyecto desde /vagrant a /home/vagrant/node-app
-    sudo cp /vagrant/server.js /home/vagrant/node-app/
-    sudo cp /vagrant/server-cluster.js /home/vagrant/node-app/
-    sudo cp /vagrant/ecosystem.config.js /home/vagrant/node-app/
+    sudo cp -r /vagrant/node-app/* /home/vagrant/node-app/
 
-    # Instalamos loadtest globalmente
-    sudo npm install -g loadtest
+    # Instalamos herramientas necesarias
+    sudo npm install -g loadtest pm2
 
-    # Instalamos y configuramos PM2
-    sudo npm install -g pm2
-    pm2 start /home/vagrant/node-app/server.js -i 0
+    # Cargar PM2 en el path
+    export PATH=$PATH:/home/vagrant/.npm-global/bin
+
+    # Iniciar aplicaciones con PM2 usando ecosystem.config.js
+    pm2 start /home/vagrant/node-app/ecosystem.config.js
+
+    # Guardar configuración de PM2
     pm2 save
     pm2 startup systemd
+
+    # Esperar que PM2 inicie correctamente
+    sleep 5
+
+    # Verificar que la aplicación responde antes de hacer pruebas de carga
+    if curl -s http://localhost:3000 > /dev/null; then
+        echo "La aplicación está en ejecución, procediendo con las pruebas de carga."
+    else
+        echo "ERROR: La aplicación no está corriendo correctamente. Verifica PM2."
+        pm2 logs server-cluster
+        exit 1
+    fi
+
+    # Ejecutar pruebas de carga
+    echo "Ejecutando prueba sin clúster..."
+    loadtest http://localhost:3000/api/500000 -n 1000 -c 100
+
+    echo "Ejecutando prueba con clúster..."
+    loadtest http://localhost:3000/api/500000 -n 1000 -c 100
 
     # Mensaje final
     echo "Configuración completada. Puedes acceder a la aplicación en http://192.168.56.10:3000"
